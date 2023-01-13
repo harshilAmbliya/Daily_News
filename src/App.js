@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React with harshil
+          Learn React with harshil update
         </a>
       </header>
     </div>
