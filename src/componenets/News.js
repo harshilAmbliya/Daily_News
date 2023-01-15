@@ -45,7 +45,7 @@ export default class News extends Component {
         let data = await fetch(url)
         let parseData = await data.json()
         console.log(parseData)
-        this.setState({articles : parseData.articles})
+        this.setState({ articles: parseData.articles })
     }
 
     render() {
@@ -56,7 +56,7 @@ export default class News extends Component {
                     <div className="row">
                         {this.state.articles.map((element) => {
                             return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title?element.title :""} description={element.description} imgurl={!(element.urlToImage) ? "https://c.ndtvimg.com/2023-01/6cuvsvgg_gauri-khan_625x300_14_January_23.jpg" :element.urlToImage} newsurl={element.url} />
+                                <NewsItem title={element.title ? element.title : ""} description={element.description ? element.description : ""} imgurl={element.urlToImage ? element.urlToImage : "https://c.ndtvimg.com/2023-01/6cuvsvgg_gauri-khan_625x300_14_January_23.jpg"} newsurl={element.url} />
                             </div>
                         })}
 
