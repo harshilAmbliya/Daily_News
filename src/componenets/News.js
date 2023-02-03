@@ -33,18 +33,20 @@ export default class News extends Component {
         })
         this.props.setProgress(100);
     }
-    async componentDidMount(){
+    async componentDidMount() {
         this.updatenews();
+        console.log(this.state.articles);
+        console.log(this.state.totalResults);
     }
 
-    fetchMoreData = async() => {
+    fetchMoreData = async () => {
         this.setState({ page: this.state.page + 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}&category=${this.props.category}`
+        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}`
         this.setState({ loading: true })
         let data = await fetch(url)
         let parseData = await data.json()
         this.setState({
-            articles:this.state.articles.concat(parseData.articles) ,
+            articles: this.state.articles.concat(parseData.articles),
             totalResults: parseData.totalResults,
             loading: false
         })
@@ -55,15 +57,12 @@ export default class News extends Component {
             <>
                 <div className="container my-3">
                     <h2 className='my-2'>Daily - News Top Headlines..</h2>
-
-
                     <InfiniteScroll
                         dataLength={this.state.articles.length}
                         next={this.fetchMoreData}
                         hasMore={this.state.articles.length !== this.state.totalResults}
                         loader={<Spinnerbook />}
                     >
-
                         <div className="container row">
                             {this.state.articles.map((element) => {
                                 return <div className="col-md-4" key={element.url}>

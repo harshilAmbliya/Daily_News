@@ -29,6 +29,7 @@ export default class App extends Component {
             <Route exact path='technology' key="technology" element={<News setProgress={this.setProgress} pagesize={6} category="technology" />} />
             <Route exact path='business' key="business" element={<News setProgress={this.setProgress} pagesize={6} category="business" />} />
             <Route exact path='health' key="health" element={<News setProgress={this.setProgress} pagesize={6} category="health" />} />
+            <Route exact path='entertainment' key="entertainment" element={<News setProgress={this.setProgress} pagesize={6} category="entertainment" />} />
           </Routes>
         </BrowserRouter>
 
