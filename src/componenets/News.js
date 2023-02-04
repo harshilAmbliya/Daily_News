@@ -20,7 +20,7 @@ export default class News extends Component {
 
     async updatenews() {
         this.props.setProgress(30);
-        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}&category=${this.props.category}`
+        const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}&category=${this.props.category}&page=${this.state.page}`
         this.setState({ loading: true })
         let data = await fetch(url)
         this.props.setProgress(50);
@@ -29,19 +29,18 @@ export default class News extends Component {
         this.setState({
             articles: parseData.articles,
             totalResults: parseData.totalResults,
-            // loading: false
+            loading: false
         })
         this.props.setProgress(100);
     }
     async componentDidMount() {
         this.updatenews();
-        console.log(this.state.articles);
-        console.log(this.state.totalResults);
     }
 
     fetchMoreData = async () => {
         this.setState({ page: this.state.page + 1 })
-        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}`
+        // { console.log(this.state.page) }
+        const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=0049c99150884ee49e85af9963fa467d&pageSize=${this.props.pagesize}&category=${this.props.category}&page=${this.state.page}`
         this.setState({ loading: true })
         let data = await fetch(url)
         let parseData = await data.json()
@@ -61,7 +60,7 @@ export default class News extends Component {
                         dataLength={this.state.articles.length}
                         next={this.fetchMoreData}
                         hasMore={this.state.articles.length !== this.state.totalResults}
-                        loader={<Spinnerbook />}
+                        loader={this.state.loading && <Spinnerbook />}
                     >
                         <div className="container row">
                             {this.state.articles.map((element) => {
