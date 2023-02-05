@@ -4,6 +4,7 @@ import NewsItem from './NewsItem'
 import Spinnerbook from './Spinnerbook';
 //import uuid v4
 import { v4 as uuid } from 'uuid';
+import axios from "axios";
 
 
 export default class News extends Component {
@@ -20,13 +21,18 @@ export default class News extends Component {
         }
     }
 
+    
+
     updatenews = async () => {
         this.props.setProgress(30);
-        const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=0ce6a77c696a499b915c425cdf324bde&pageSize=${this.props.pagesize}&category=${this.props.category}&page=${this.state.page}`
+        const options = {
+            method: "GET",
+            url: `https://newsapi.org/v2/top-headlines?country=in&apiKey=0ce6a77c696a499b915c425cdf324bde&pageSize=${this.props.pagesize}&category=${this.props.category}&page=${this.state.page}`,
+          };
+        // const url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=0ce6a77c696a499b915c425cdf324bde&pageSize=${this.props.pagesize}&category=${this.props.category}&page=${this.state.page}`
         this.setState({ loading: true })
-        let data = await fetch(url)
-        this.props.setProgress(50);
-        let parseData = await data.json()
+        let response = await axios.request(options)
+        let parseData = response.data
         this.props.setProgress(70);
         this.setState({
             articles: parseData.articles,
